@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Filament\Resources\Representatives;
+
+use App\Filament\Resources\Representatives\Pages\CreateRepresentative;
+use App\Filament\Resources\Representatives\Pages\EditRepresentative;
+use App\Filament\Resources\Representatives\Pages\ListRepresentatives;
+use App\Filament\Resources\Representatives\Schemas\RepresentativeForm;
+use App\Filament\Resources\Representatives\Tables\RepresentativesTable;
+use App\Models\Representative;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use UnitEnum;
+
+class RepresentativeResource extends Resource
+{
+    protected static ?string $model = Representative::class;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $modelLabel = 'perwakilan';
+
+    protected static ?string $pluralModelLabel = 'perwakilan';
+
+    protected static ?string $navigationLabel = 'Perwakilan daerah';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Profil';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMapPin;
+
+    public static function form(Schema $schema): Schema
+    {
+        return RepresentativeForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return RepresentativesTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListRepresentatives::route('/'),
+            'create' => CreateRepresentative::route('/create'),
+            'edit' => EditRepresentative::route('/{record}/edit'),
+        ];
+    }
+}
