@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Article;
+use App\Models\Mentor;
 use App\Models\Package;
 use App\Models\WhatsappClick;
 use App\Support\WhatsApp;
@@ -65,6 +66,24 @@ class StaticExportTest extends TestCase
         $this->assertStringContainsString('<loc>https://pratinjau.test/legalitas</loc>', File::get("{$this->folder}/sitemap.xml"));
         $this->assertStringContainsString('Halaman tidak ditemukan', File::get("{$this->folder}/404.html"));
         $this->assertFileDoesNotExist("{$this->folder}.partial");
+    }
+
+    public function test_uploaded_photos_are_copied_with_the_preview_address(): void
+    {
+        $photo = 'mentors/uji-ekspor-'.Str::lower(Str::random(6)).'.jpg';
+        File::ensureDirectoryExists(storage_path('app/public/mentors'));
+        File::copy(public_path('images/og-amsa-nur.jpg'), storage_path("app/public/{$photo}"));
+
+        try {
+            Mentor::factory()->create(['photo_path' => $photo]);
+
+            $this->export()->assertSuccessful();
+
+            $this->assertStringContainsString("https://pratinjau.test/storage/{$photo}", File::get("{$this->folder}/pembimbing.html"));
+            $this->assertFileEquals(storage_path("app/public/{$photo}"), "{$this->folder}/storage/{$photo}");
+        } finally {
+            File::delete(storage_path("app/public/{$photo}"));
+        }
     }
 
     public function test_umrah_filters_become_pages_of_their_own(): void

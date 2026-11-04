@@ -46,11 +46,6 @@ return [
 
     'whatsapp_message' => env('SITE_WHATSAPP_MESSAGE', "Assalamu'alaikum, saya ingin bertanya tentang paket umroh/haji Amsa Nur."),
 
-    // The director's own WhatsApp, printed on some brochures (13 January, 16 December).
-    // Confirmed by the client on 4 November 2026. Listed on the legal page so visitors
-    // can verify it; the WhatsApp buttons still use 'whatsapp' above.
-    'director_whatsapp' => env('SITE_DIRECTOR_WHATSAPP', '0812-1319-0005'),
-
     // Shown as "Kantor Pusat" on the brochures.
     'phone' => env('SITE_PHONE', '0821-1222-0576'),
 

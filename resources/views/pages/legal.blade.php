@@ -118,9 +118,6 @@
                         <x-site-icon name="whatsapp" /> WhatsApp {{ $site['phone'] }}
                     </x-whatsapp-link>
                 </li>
-                @if ($site['director_whatsapp'])
-                    <li><a href="https://wa.me/{{ \App\Support\WhatsApp::number($site['director_whatsapp']) }}" class="inline-flex min-h-11 items-center gap-2 font-semibold text-wa hover:underline" rel="nofollow noopener" target="_blank"><x-site-icon name="whatsapp" /> WhatsApp Direktur {{ $site['director_whatsapp'] }}</a></li>
-                @endif
                 @if ($site['office']['phone'])
                     <li><a href="tel:{{ preg_replace('/[^\d+]/', '', $site['office']['phone']) }}" class="inline-flex min-h-11 items-center gap-2 font-semibold text-brand hover:underline"><x-site-icon name="phone" /> Kantor {{ $site['office']['phone'] }}</a></li>
                 @endif

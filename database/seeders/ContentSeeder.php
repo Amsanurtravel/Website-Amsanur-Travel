@@ -174,7 +174,7 @@ class ContentSeeder extends Seeder
                 'includes' => $includes,
                 'notes' => 'Harga sewaktu-waktu dapat berubah menyesuaikan kebijakan Kerajaan Arab Saudi dan maskapai.',
                 'mentor_id' => $mentor->id,
-                // The 16 December brochure prints the director's number (config site.director_whatsapp); buttons stay on the office number.
+                // The 16 December brochure prints the director's own number; the site only ever shows the admin number.
             ],
             'umroh-ekonomis-12-hari-13-januari-2027' => $umrah + [
                 'departure_date' => '2027-01-13',
@@ -187,7 +187,7 @@ class ContentSeeder extends Seeder
                 'price_triple' => 36_000_000,
                 'price_double' => 38_000_000,
                 'includes' => [...$includes, 'Transportasi dan konsumsi selama umroh'],
-                // The 13 January brochure prints the director's number (config site.director_whatsapp) and misprints "PPIU : 1033".
+                // The 13 January brochure prints the director's own number and misprints "PPIU : 1033"; the site uses the admin number and PPIU 1031.
             ],
             'umroh-awal-ramadhan-12-hari-8-februari-2027' => [
                 ...$umrah,

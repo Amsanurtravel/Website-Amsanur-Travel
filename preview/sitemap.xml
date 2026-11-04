@@ -8,6 +8,7 @@
             <url><loc>https://websiteamsanurtravel.vercel.app/perwakilan</loc></url>
             <url><loc>https://websiteamsanurtravel.vercel.app/pembimbing</loc></url>
             <url><loc>https://websiteamsanurtravel.vercel.app/kebijakan-privasi</loc></url>
+            <url><loc>https://websiteamsanurtravel.vercel.app/artikel</loc></url>
                 <url>
             <loc>https://websiteamsanurtravel.vercel.app/paket/umroh-ekonomis-12-hari-11-november-2026</loc>
             <lastmod>2026-11-03T10:42:44+07:00</lastmod>
@@ -36,4 +37,23 @@
             <loc>https://websiteamsanurtravel.vercel.app/paket/umroh-promo-milad-9-hari-juli-2027</loc>
             <lastmod>2026-11-04T15:10:16+07:00</lastmod>
         </url>
-            </urlset>
+                <url><loc>https://websiteamsanurtravel.vercel.app/artikel/kategori/biaya-paket</loc></url>
+            <url><loc>https://websiteamsanurtravel.vercel.app/artikel/kategori/legalitas-keamanan</loc></url>
+            <url><loc>https://websiteamsanurtravel.vercel.app/artikel/kategori/panduan-umrah</loc></url>
+                <url>
+            <loc>https://websiteamsanurtravel.vercel.app/artikel/cara-cek-travel-umrah-dan-haji-resmi</loc>
+            <lastmod>2026-11-04T22:15:36+07:00</lastmod>
+        </url>
+            <url>
+            <loc>https://websiteamsanurtravel.vercel.app/artikel/syarat-dan-dokumen-umrah</loc>
+            <lastmod>2026-11-04T22:15:36+07:00</lastmod>
+        </url>
+            <url>
+            <loc>https://websiteamsanurtravel.vercel.app/artikel/memahami-biaya-paket-umrah</loc>
+            <lastmod>2026-11-04T22:15:36+07:00</lastmod>
+        </url>
+            <url>
+            <loc>https://websiteamsanurtravel.vercel.app/artikel/umrah-mandiri-atau-lewat-travel-resmi</loc>
+            <lastmod>2026-11-04T22:15:36+07:00</lastmod>
+        </url>
+    </urlset>

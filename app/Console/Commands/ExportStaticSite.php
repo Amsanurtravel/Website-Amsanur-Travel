@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,6 +42,9 @@ class ExportStaticSite extends Command
 
     /** A path that does not exist, rendered as the 404 page. */
     private string $probe;
+
+    /** APP_URL of this computer, which must not leak into the pages. */
+    private string $localRoot;
 
     /** @var array<string, string> request path and query => output file */
     private array $pages = [];
@@ -99,7 +103,11 @@ class ExportStaticSite extends Command
         $this->root = $root;
         $this->probe = '/halaman-tidak-ada-'.Str::lower(Str::random(8));
 
-        config(['app.url' => $root, 'app.debug' => false]);
+        $this->localRoot = rtrim((string) config('app.url'), '/');
+
+        // Uploads (the mentor photo, article covers) get their address from the disk, not the request.
+        config(['app.url' => $root, 'app.debug' => false, 'filesystems.disks.public.url' => $root.'/storage']);
+        Storage::forgetDisk('public');
         URL::forceRootUrl($root);
         URL::forceScheme($scheme);
 
@@ -151,9 +159,18 @@ class ExportStaticSite extends Command
             return;
         }
 
+        $content = (string) $response->getContent();
+
+        // An address built from the local APP_URL (http://localhost:8000) would be dead on the preview.
+        if ($this->localRoot !== $this->root && preg_match('#'.preg_quote($this->localRoot, '#').'(?![\w.:-])#', $content)) {
+            $this->errors[] = "{$uri} masih memuat alamat lokal {$this->localRoot}";
+
+            return;
+        }
+
         $file = $build.'/'.$this->pages[$uri];
         $this->filesystem->ensureDirectoryExists(dirname($file));
-        $this->filesystem->put($file, $this->rewrite((string) $response->getContent()));
+        $this->filesystem->put($file, $this->rewrite($content));
     }
 
     private function send(string $uri): Response

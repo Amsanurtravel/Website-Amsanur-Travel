@@ -28,10 +28,10 @@ class WhatsappTest extends TestCase
     public function test_a_departure_can_use_its_own_whatsapp_number(): void
     {
         config(['site.whatsapp' => '0821-1222-0576']);
-        $package = Package::factory()->create(['whatsapp' => '+62 812-1319-0005']);
+        $package = Package::factory()->create(['whatsapp' => '+62 812-5550-1234']);
 
         $this->get(route('whatsapp', ['paket' => $package->slug]), ['User-Agent' => self::BROWSER])
-            ->assertRedirectContains('https://wa.me/6281213190005?text=');
+            ->assertRedirectContains('https://wa.me/6281255501234?text=');
     }
 
     public function test_page_clicks_use_the_page_message_and_a_clean_source(): void

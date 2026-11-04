@@ -6,6 +6,7 @@ use App\Filament\Resources\Packages\Pages\CreatePackage;
 use App\Models\Package;
 use App\Models\User;
 use App\Support\StructuredData;
+use App\Support\WhatsApp;
 use Database\Seeders\ContentSeeder;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -152,14 +153,20 @@ class ClientUpdateTest extends TestCase
             ->assertSee('Beliau juga Direktur PT Amsa Nur Indah Mandiri');
     }
 
-    public function test_the_directors_number_is_listed_as_official_but_buttons_use_the_office(): void
+    public function test_every_whatsapp_goes_to_the_admin_and_the_directors_number_is_not_shown(): void
     {
         $this->seed(ContentSeeder::class);
 
-        $this->get(route('legal'))
-            ->assertOk()
-            ->assertSee('WhatsApp Direktur 0812-1319-0005')
-            ->assertSee('https://wa.me/6281213190005', false);
+        foreach ([route('home'), route('legal'), route('about'), route('mentors'), route('packages.show', 'umroh-ekonomis-12-hari-13-januari-2027')] as $url) {
+            $this->get($url)
+                ->assertOk()
+                ->assertDontSee('1319')
+                ->assertDontSee('Direktur 08');
+        }
+
+        $this->assertNull(config('site.director_whatsapp'));
+        $this->get(route('whatsapp', ['dari' => 'paket', 'paket' => 'umroh-ekonomis-12-hari-13-januari-2027']))
+            ->assertRedirectContains('https://wa.me/'.WhatsApp::number(config('site.whatsapp')).'?text=');
 
         $this->assertNull(Package::firstWhere('slug', 'umroh-ekonomis-12-hari-13-januari-2027')->whatsapp);
     }

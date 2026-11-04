@@ -47,8 +47,8 @@ class HardeningTest extends TestCase
 
     public function test_whatsapp_numbers_are_normalised_the_way_people_type_them(): void
     {
-        foreach (['0812-1319-0005', '62812 1319 0005', '+62 812-1319-0005', '+62 0812 1319 0005', '0062 812-1319-0005', '812-1319-0005'] as $typed) {
-            $this->assertSame('6281213190005', WhatsApp::number($typed), $typed);
+        foreach (['0812-5550-1234', '62812 5550 1234', '+62 812-5550-1234', '+62 0812 5550 1234', '0062 812-5550-1234', '812-5550-1234'] as $typed) {
+            $this->assertSame('6281255501234', WhatsApp::number($typed), $typed);
         }
 
         $this->assertTrue(WhatsApp::isValid('0821-1222-0576'));
@@ -164,11 +164,11 @@ class HardeningTest extends TestCase
             ->assertHasFormErrors(['whatsapp']);
 
         Livewire::test(CreatePackage::class)
-            ->fillForm(['type' => Package::UMRAH, 'name' => 'Umroh Uji', 'whatsapp' => '+62 0812-1319-0005'])
+            ->fillForm(['type' => Package::UMRAH, 'name' => 'Umroh Uji', 'whatsapp' => '+62 0812-5550-1234'])
             ->call('create')
             ->assertHasNoFormErrors();
 
-        $this->assertSame('6281213190005', Package::firstWhere('name', 'Umroh Uji')->whatsapp);
+        $this->assertSame('6281255501234', Package::firstWhere('name', 'Umroh Uji')->whatsapp);
     }
 
     public function test_admin_refuses_svg_uploads(): void
